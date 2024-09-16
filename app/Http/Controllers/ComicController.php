@@ -32,10 +32,11 @@ class ComicController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'author' => 'required|string|max:255',
-            'publisher' => 'required|string|max:255',
-            'release_date' => 'required|date',
+            'thumb' => 'string',
             'price' => 'required|numeric',
+            'series' => 'string|max:255',
+            'sale_date' => 'date',
+            'type' => 'required|string|max:255',
         ]);
 
         $comic = Comic::create($data);
