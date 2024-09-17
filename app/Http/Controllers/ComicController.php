@@ -98,6 +98,6 @@ class ComicController extends Controller
         $comic = Comic::findOrFail($id);
         $comic->update($data);
 
-        return redirect()->route('comics.show', $comic->id);
+        return redirect()->route('comics.show', $comic->id)->with('success', 'Fumetto eliminato con successo');
     }
 }
