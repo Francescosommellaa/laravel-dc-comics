@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreComicRequest;
 use App\Models\Comic;
 use Illuminate\Http\Request;
 
 class ComicController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -28,17 +30,9 @@ class ComicController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreComicRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'thumb' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'series' => 'required|string',
-            'sale_date' => 'required|date',
-            'type' => 'required|string'
-        ]);
+        $validated = $request->validated();
 
         $comic = Comic::create($validated);
 
@@ -67,17 +61,9 @@ class ComicController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreComicRequest $request, string $id)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|min:3|max:255',
-            'description' => 'nullable|string',
-            'thumb' => 'required|url|max:255',
-            'price' => 'required|numeric',
-            'series' => 'required|string',
-            'sale_date' => 'required|date',
-            'type' => 'required|string'
-        ]);
+        $validated = $request->validated();
 
         $comic = Comic::find($id);
 
@@ -85,6 +71,14 @@ class ComicController extends Controller
         $comic->update($validated);
 
         return redirect()->route('comics.show', ['comic' => $comic->id]);
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.min' => 'il titolo deve essere di almeno 3 caratteri',
+            'price.numeric' => 'Il prezzo deve essere un numero',
+        ];
     }
 
     /**
