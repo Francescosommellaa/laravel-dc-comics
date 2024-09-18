@@ -16,7 +16,7 @@
 
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $comic->title }}</h5>
-                                <p class="card-text">{{ \Illuminate\Support\Str::limit($comic->description, 80) }}</p>
+                                <p class="card-text">{{ $comic->description, 80 }}</p>
 
                                 <div class="mt-auto">
                                     <a href="{{ route('comics.edit', $comic->id) }}"
